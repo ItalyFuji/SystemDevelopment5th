@@ -113,14 +113,73 @@ class TestAddition:
         # Assert
         assert result == pytest.approx(expected)
 
-    def test_add_raises_error_for_too_large_input(self, calc):
-        with pytest.raises(InvalidInputException):
+    def test_add_raises_error_for_too_large_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
             calc.add(1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
 
-    def test_add_raises_error_for_too_small_input(self, calc):
-        with pytest.raises(InvalidInputException):
-            calc.add(-1000001, -1)
+    def test_add_raises_error_for_too_small_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.add(-1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
 
+    def test_add_raises_error_for_too_large_b(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.add(1, 1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_add_raises_error_for_too_small_b(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.add(1, -1000001)
+        assert "outside the valid range" in str(excinfo.value)
+    
+    def test_add_max_a(self, calc):
+        # Arrange
+        a = 1000000
+        b = 3
+        expected = 1000003
+
+        # Act
+        result = calc.add(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_add_min_a(self, calc):
+        # Arrange
+        a = -1000000
+        b = 3
+        expected = -999997
+
+        # Act
+        result = calc.add(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)   
+
+    def test_add_max_b(self, calc):
+        # Arrange
+        a = 1
+        b = 1000000
+        expected = 1000001
+
+        # Act
+        result = calc.add(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_add_min_b(self, calc):
+        # Arrange
+        a = 9
+        b = -1000000
+        expected = -999991
+
+        # Act
+        result = calc.add(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)        
 
 class TestSubtraction:
     """Tests for the subtract method."""
@@ -140,11 +199,87 @@ class TestSubtraction:
 
         # Assert
         assert result == expected
+        
+    def test_subtract_negative_numbers(self, calc):
 
-    def test_subtract_raises_error_for_input(self, calc):
-        with pytest.raises(InvalidInputException):
+        # Arrange
+        a = 11
+        b = -2
+        expected = 13
+        
+        # Act
+        result = calc.subtract(a, b)
+
+        # Assert
+        assert result == expected
+
+    def test_subtract_raises_error_for_too_large_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
             calc.subtract(1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
 
+    def test_subtract_raises_error_for_too_small_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.subtract(-1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_subtract_raises_error_for_too_large_b(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.subtract(1, 1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_subtract_raises_error_for_too_small_b(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.subtract(1, -1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_subtract_max_a(self, calc):
+        # Arrange
+        a = 1000000
+        b = 7
+        expected = 999993
+
+        # Act
+        result = calc.subtract(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_subtract_min_a(self, calc):
+        # Arrange
+        a = -1000000
+        b = 4
+        expected = -1000004
+
+        # Act
+        result = calc.subtract(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)   
+
+    def test_subtract_max_b(self, calc):
+        # Arrange
+        a = 2
+        b = 1000000
+        expected = -999998
+
+        # Act
+        result = calc.subtract(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_subtract_min_b(self, calc):
+        # Arrange
+        a = 3
+        b = -1000000
+        expected = 1000003
+
+        # Act
+        result = calc.subtract(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected) 
 
 class TestMultiplication:
     """Tests for the multiply method."""
@@ -163,11 +298,88 @@ class TestMultiplication:
         result = calc.multiply(a, b)
 
         # Assert
-        assert result == expected        
+        assert result == expected       
+        
+    def test_multiply_negative_numbers(self, calc):
+        
+        # Arrange
+        a = 3
+        b = -2
+        expected = -6
 
-    def test_multiply_raises_error_for_input(self, calc):
-        with pytest.raises(InvalidInputException):
+        # Act
+        result = calc.multiply(a, b)
+
+        # Assert
+        assert result == expected               
+
+    def test_multiply_raises_error_for_too_large_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
             calc.multiply(1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_multiply_raises_error_for_too_small_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.multiply(-1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_multiply_raises_error_for_too_large_b(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.multiply(1, 1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_multiply_raises_error_for_too_small_b(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
+            calc.multiply(1, -1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_subtract_max_a(self, calc):
+        # Arrange
+        a = 1000000
+        b = 31
+        expected = 31000000
+
+        # Act
+        result = calc.multiply(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_subtract_min_a(self, calc):
+        # Arrange
+        a = -1000000
+        b = 41
+        expected = -41000000
+
+        # Act
+        result = calc.multiply(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)   
+
+    def test_subtract_max_b(self, calc):
+        # Arrange
+        a = 90
+        b = 1000000
+        expected = 90000000
+
+        # Act
+        result = calc.multiply(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_multiply_min_b(self, calc):
+        # Arrange
+        a = 4
+        b = -1000000
+        expected = -4000000
+
+        # Act
+        result = calc.multiply(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected) 
 
 class TestDivision:
     """Tests for the divide method."""
@@ -187,6 +399,32 @@ class TestDivision:
 
         # Assert
         assert result == expected
+        
+    def test_divide_negative_numbers(self, calc):
+
+        # Arrange
+        a = 10
+        b = -2
+        expected = -5
+
+        # Act
+        result = calc.divide(a, b)
+
+        # Assert
+        assert result == expected
+
+    def test_divide_floats(self, calc):
+
+        # Arrange
+        a = 33
+        b = 5
+        expected = 6.6
+
+        # Act
+        result = calc.divide(a, b)
+
+        # Assert
+        assert result == expected
 
 
     def test_divide_with_zero(self, calc):
@@ -194,9 +432,75 @@ class TestDivision:
         a = 1
         b = 0
         
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError) as excinfo:
             calc.divide(a, b)
-            
-    def test_divide_raises_error_for_input(self, calc):
-        with pytest.raises(InvalidInputException):
+
+        assert str(excinfo.value) == "Cannot divide by zero"
+
+    def test_divide_raises_error_for_too_large_a(self, calc):
+        with pytest.raises(InvalidInputException) as excinfo:
             calc.divide(1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_divide_raises_error_for_too_small_a(self, calc):
+        with pytest.raises(InvalidInputException)as excinfo:
+            calc.divide(-1000001, 1)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_divide_raises_error_for_too_large_b(self, calc):
+        with pytest.raises(InvalidInputException)as excinfo:
+            calc.divide(1, 1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_divide_raises_error_for_too_small_b(self, calc):
+        with pytest.raises(InvalidInputException)as excinfo:
+            calc.divide(1, -1000001)
+        assert "outside the valid range" in str(excinfo.value)
+
+    def test_divide_max_a(self, calc):
+        # Arrange
+        a = 1000000
+        b = 1
+        expected = 1000000
+
+        # Act
+        result = calc.divide(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_divide_min_a(self, calc):
+        # Arrange
+        a = -1000000
+        b = 4
+        expected = -250000
+
+        # Act
+        result = calc.divide(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)   
+
+    def test_divide_max_b(self, calc):
+        # Arrange
+        a = 2
+        b = 1000000
+        expected = 0.000002
+
+        # Act
+        result = calc.divide(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected)
+
+    def test_divide_min_b(self, calc):
+        # Arrange
+        a = 10
+        b = -1000000
+        expected = -0.00001
+
+        # Act
+        result = calc.divide(a, b)
+
+        # Assert
+        assert result == pytest.approx(expected) 
